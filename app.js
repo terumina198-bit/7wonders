@@ -4,7 +4,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
 import { civIcons, rows } from "./config.js";
-
+import { onDisconnect } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 let roomId, playerId="p"+Math.random().toString(36).slice(2,8);
 let selectedCiv="";
 let players = [];
@@ -71,6 +71,8 @@ function row(label,key,val){
 }
 
 /* ================= start ================= */
+
+
 function start(){
   const name = document.getElementById("name").value.trim();
   if(!name){
@@ -83,26 +85,28 @@ function start(){
     return;
   }
 
-  // ★ mainUI を最初に表示
+  // UI 表示
   document.getElementById("mainUI").classList.remove("hidden");
 
-  // ★ タブ初期化
+  // タブ初期化
   document.getElementById("inputPanel").style.display = "block";
   document.getElementById("resultPanel").style.display = "none";
   document.getElementById("tabInput").classList.add("active");
   document.getElementById("tabResult").classList.remove("active");
 
-  // ★ roomId を先に確定させる（ここが重要）
+  // roomId 生成
   if(!roomId){
     roomId = Math.random().toString(36).slice(2,8);
     history.replaceState(null, "", "?room=" + roomId);
   }
 
-  // ★ QR を roomId 確定後に生成
+  // QR 表示
   renderQR(roomId);
 
-  // ★ Firebase に自分を登録
-  set(ref(db,"rooms/"+roomId+"/players/"+playerId),{
+  // Firebase 登録
+  const playerRef = ref(db, `rooms/${roomId}/players/${playerId}`);
+
+  set(playerRef, {
     name,
     civilization:selectedCiv,
     scores:{
@@ -115,13 +119,12 @@ function start(){
     }
   });
 
-  // ★ UI 表示後に listen を開始
+  // ★ スマホでも確実に削除される
+  onDisconnect(playerRef).remove();
+
+  // リスナー開始
   listen();
 }
-
-
-
-
 
 function showGameUI(){
   document.getElementById("civSelect").classList.remove("hidden");
