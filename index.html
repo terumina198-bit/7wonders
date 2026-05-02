@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7 Wonders Score</title>
+
+<link rel="stylesheet" href="./style.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+</head>
+
+<body>
+
+<div id="topBar" class="top-bar">
+  <div class="top-title">7 WONDERS SCORE</div>
+  <div class="top-score" id="topScore"></div>
+</div>
+
+<div class="control">
+
+  <div class="inputArea">
+    <input id="name" placeholder="名前">
+  </div>
+
+  <div class="civArea">
+    <div id="civSelect"></div>
+  </div>
+
+  <div class="actionArea">
+    <button id="startBtn">開始</button>
+    <button id="copyBtn" class="hidden">URLコピー</button>
+  </div>
+
+  <div id="qr" class="hidden"></div>
+
+</div>
+
+<div class="layout hidden" id="mainUI">
+  <div id="inputPanel"></div>
+  <div id="resultPanel"></div>
+</div>
+
+<script type="module" src="./app.js"></script>
+
+</body>
+</html>

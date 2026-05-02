@@ -1,0 +1,277 @@
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:#f5f5f5;
+}
+
+#topBar{
+  position:sticky;
+  top:0;
+  background:#1b5e20;
+  color:white;
+  text-align:center;
+  padding:10px;
+}
+
+.layout{
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 10px;
+  align-items: start;
+}
+/*
+@media(min-width:600px){
+  .layout{flex-direction:row;}
+}*/
+
+@media (max-width: 600px){
+  table{
+    font-size: 12px;
+  }
+  .row button{
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+  .top-bar{
+    font-size: 16px;
+    padding: 6px 10px;
+  }
+}
+
+#inputPanel,#resultPanel{
+  flex:1;
+  margin:10px;
+  background:white;
+  padding:10px;
+  border-radius:10px;
+}
+
+.section{
+  background:#f0f0f0;
+  margin-bottom:10px;
+  padding:20px;
+  border-radius:8px;
+  padding-top: 1px;
+  padding-bottom: 10px;
+}
+
+.row{
+  display: grid;
+  grid-template-columns:90px 35px 40px 35px;
+  align-items: center;
+}
+
+.hidden{
+  display:none;
+}
+
+.row div{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100%;
+}
+
+button{
+  height:30px;
+}
+
+.civBtn{
+  margin:4px;
+  padding:6px 10px;
+  border:1px solid #ccc;
+  border-radius:6px;
+  background:white;
+  cursor:pointer;
+}
+
+.civBtn.active{
+  background:#ffd54f;
+  font-weight:bold;
+  transform:scale(1.05);
+}
+/* 🏆 1位 */
+.first{
+  background: linear-gradient(135deg, #ffd700, #ffb300);
+  color:#000;
+  font-weight:bold;
+  box-shadow: 0 0 6px rgba(255, 215, 0, 0.6);
+}
+
+/* 👤 自分 */
+.me{
+  background:#d0ebff !important;
+  font-weight:bold;
+}
+
+/* ===== セクション色分け ===== */
+
+/* 陸戦 */
+.section-military{
+  background:#ffe5e5;
+}
+
+/* 経済 */
+.section-economy{
+  background:#fff6cc;
+}
+
+/* 科学 */
+.section-science{
+  background:#e6ffe6;
+}
+
+/* 建築・拡張 */
+.section-expansion{
+  background:#f0e6ff;
+}
+
+/* ワンダー系 */
+.section-build{
+  background:transparent;
+}
+
+/* テーブル全体 */
+table{
+  border-collapse: collapse;
+  width: 100%;
+  border: 2px solid #333;
+  font-size: 14px;
+  table-layout: fixed;
+}
+
+/* セル共通 */
+th, td{
+  border: 1px solid #ccc;
+  padding: 6px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+/* ヘッダー */
+th{
+  background: #f5f5f5;
+  font-weight: bold;
+}
+
+/* 左側の項目列 */
+td:first-child, th:first-child{
+  background: #fafafa;
+  font-weight: bold;
+  left: 0;
+  z-index: 1;
+}
+
+/* 行の区切りを少し強調 */
+tr{
+  border-bottom: 1px solid #ddd;
+}
+
+.sectionCell{
+  width: 70px;
+  max-width: 70px;
+  white-space: nowrap;
+  background: #eee;
+  font-weight: bold;
+}
+
+td.sectionCell{
+  font-weight: bold !important;
+  background: #eee !important;
+}
+
+td.labelCell{
+  font-weight: bold;
+}
+
+.totalRow td{
+  background: #000 !important;
+  color: #fff !important;
+  font-weight: bold !important;
+}
+
+.rankRow td{
+  font-weight: bold;
+}
+
+/* ===== 軍事 ===== */
+.item-military_land td{
+  background: #ffe5e5; /* 薄い赤 */
+}
+
+.item-military_sea td{
+  background: #e5f0ff; /* 薄い青 */
+}
+
+/* ===== 経済（コイン・借財・商業） ===== */
+.item-economy_coin td,
+.item-economy_debt td,
+.item-economy_trade td{
+  background: #fff8cc; /* 薄い黄色 */
+}
+
+/* ===== 建設 ===== */
+.item-build_wonder td{
+  background: #f7f7f7; /* ワンダー → ほぼ白（指定なしなので中立） */
+}
+
+.item-build_point td{
+  background: #e5f0ff; /* ポイント → 薄い青 */
+}
+
+.item-build_guild td{
+  background: #f0e5ff; /* ギルド → 薄い紫 */
+}
+
+.item-build_city td{
+  background: #eeeeee; /* シティ → 薄い黒（薄いグレー） */
+}
+
+/* ===== 拡張 ===== */
+.item-expansion_leader td{
+  background: #f7f7f7; /* リーダー → 中立（指定なし） */
+}
+
+.item-expansion_naval td{
+  background: #e5f0ff; /* 海戦ボード → 薄い青 */
+}
+
+.item-expansion_palm td{
+  background: #e6ffe6; /* ヤシの木 → 薄い緑 */
+}
+
+/* ===== 科学（歯車・コンパス・石板・ALL） ===== */
+.item-science_gear td,
+.item-science_compass td,
+.item-science_tablet td,
+.item-science_all td{
+  background: #e6ffe6; /* 薄い緑 */
+}
+
+.top-bar{
+  width: 100%;
+  background: #333;
+  color: #fff;
+  padding: 8px 12px;
+  font-size: 18px;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+
+  display: flex;
+  flex-direction: column;   /* ← これで上下に並ぶ */
+  align-items: center; 
+  gap: 4px;                 /* タイトルとスコアの間隔 */
+}
+
+.top-title{
+  font-size: 20px;
+}
+
+.top-score{
+  font-size: 18px;
+}
