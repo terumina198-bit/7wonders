@@ -71,29 +71,41 @@ function row(label,key,val){
 }
 
 /* ================= start ================= */
-window.start=function(){
-
-  const name=document.getElementById("name").value;
-
+function start(){
+  const name = document.getElementById("name").value.trim();
   if(!name){
     alert("名前を入力してください");
     return;
   }
 
   if(!selectedCiv){
-    alert("文明を選んでください");
+    alert("文明を選択してください");
     return;
   }
 
+  // ★ mainUI を最初に表示（スマホで最重要）
+  const mainUI = document.getElementById("mainUI");
+  mainUI.classList.remove("hidden");
 
+  // ★ タブ初期状態
+  const inputPanel = document.getElementById("inputPanel");
+  const resultPanel = document.getElementById("resultPanel");
+  inputPanel.style.display = "block";
+  resultPanel.style.display = "none";
 
-  console.log("START:", name, selectedCiv);
+  document.getElementById("tabInput").classList.add("active");
+  document.getElementById("tabResult").classList.remove("active");
 
-  roomId=new URLSearchParams(location.search).get("room") ||
-         Math.random().toString(36).slice(2,8);
+  // URLコピーを表示
+  document.getElementById("copyBtn").classList.remove("hidden");
 
-  history.replaceState(null,"","?room="+roomId);
+  // 部屋ID生成
+  if(!roomId){
+    roomId = Math.random().toString(36).slice(2,8);
+    history.replaceState(null, "", "?room=" + roomId);
+  }
 
+  // プレイヤー登録
   set(ref(db,"rooms/"+roomId+"/players/"+playerId),{
     name,
     civilization:selectedCiv,
@@ -102,17 +114,20 @@ window.start=function(){
       economy_coin:0,economy_debt:0,economy_trade:0,
       build_wonder:0,build_point:0,
       expansion_guild:0,expansion_leader:0,expansion_city:0,
+      expansion_naval:0,expansion_palm:0,
       science_gear:0,science_compass:0,science_tablet:0,science_all:0
     }
   });
 
-  // ✅ 成功時だけUIを開く
-  showGameUI();
-
+  // QR 表示
   renderQR(roomId);
 
+  // ★ UI が表示された後に listen() を呼ぶ（これが重要）
   listen();
-};
+}
+
+
+
 
 function showGameUI(){
   document.getElementById("civSelect").classList.remove("hidden");
@@ -368,6 +383,32 @@ function init(){
 
   document.getElementById("copyBtn")
     .addEventListener("click", copyUrl);
+
+  // ★ タブ切り替え（確実に動く版）
+  const tabInput = document.getElementById("tabInput");
+  const tabResult = document.getElementById("tabResult");
+  const inputPanel = document.getElementById("inputPanel");
+  const resultPanel = document.getElementById("resultPanel");
+
+  tabInput.addEventListener("click", ()=>{
+    inputPanel.style.display = "block";
+    resultPanel.style.display = "none";
+
+    tabInput.classList.add("active");
+    tabResult.classList.remove("active");
+  });
+
+  tabResult.addEventListener("click", ()=>{
+    inputPanel.style.display = "none";
+    resultPanel.style.display = "block";
+
+    tabResult.classList.add("active");
+    tabInput.classList.remove("active");
+  });
+
+  // 初期状態は入力タブ
+  inputPanel.style.display = "block";
+  resultPanel.style.display = "none";
 
   if(room){
     roomId = room;

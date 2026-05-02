@@ -19,23 +19,10 @@ body{
   gap: 10px;
   align-items: start;
 }
-/*
-@media(min-width:600px){
-  .layout{flex-direction:row;}
-}*/
 
 @media (max-width: 600px){
-  table{
-    font-size: 12px;
-  }
-  .row button{
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
-  }
-  .top-bar{
-    font-size: 16px;
-    padding: 6px 10px;
+  .layout{
+    display: block;   /* ← これで1カラムになる */
   }
 }
 
@@ -264,7 +251,7 @@ td.labelCell{
 
   display: flex;
   flex-direction: column;   /* ← これで上下に並ぶ */
-  align-items: center; 
+  align-items: flex-start; 
   gap: 4px;                 /* タイトルとスコアの間隔 */
 }
 
@@ -274,4 +261,33 @@ td.labelCell{
 
 .top-score{
   font-size: 18px;
+}
+
+.tabs{
+  display: flex;
+  width: 100%;
+}
+
+.tabs button{
+  flex: 1;
+  min-width: 0;
+  flex-shrink: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  padding: 12px;
+  font-size: 16px;
+  color: #fff;
+  background: #444;
+  border: none;
+}
+
+.tabs button.active{
+  background: #666;
+  font-weight: bold;
+}
+
+#resultPanel{
+  overflow-x: auto;
 }
