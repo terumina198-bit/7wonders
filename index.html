@@ -12,7 +12,6 @@
 </head>
 
 <body>
-
 <div id="topBar" class="top-bar">
   <div class="top-title">7 WONDERS SCORE</div>
   <div class="top-score" id="topScore"></div>
@@ -33,14 +32,20 @@
     <button id="copyBtn" class="hidden">URLコピー</button>
   </div>
 
+  <div id="tabs" class="tabs">
+    <button id="tabInput" class="active">入力</button>
+    <button id="tabResult">結果</button>
+  </div>
+
+  <div class="layout hidden" id="mainUI">
+    <div id="inputPanel"></div>
+    <div id="resultPanel"></div>
+  </div>
+
   <div id="qr" class="hidden"></div>
 
 </div>
 
-<div class="layout hidden" id="mainUI">
-  <div id="inputPanel"></div>
-  <div id="resultPanel"></div>
-</div>
 
 <script type="module" src="./app.js"></script>
 
