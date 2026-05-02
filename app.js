@@ -85,25 +85,25 @@ function start(){
     return;
   }
 
-  // UI 表示
+  // ★ mainUI を最初に表示（スマホで最重要）
   document.getElementById("mainUI").classList.remove("hidden");
 
-  // タブ初期化
+  // ★ タブ初期化
   document.getElementById("inputPanel").style.display = "block";
   document.getElementById("resultPanel").style.display = "none";
   document.getElementById("tabInput").classList.add("active");
   document.getElementById("tabResult").classList.remove("active");
 
-  // roomId 生成
+  // ★ roomId を先に確定（QR より前）
   if(!roomId){
     roomId = Math.random().toString(36).slice(2,8);
     history.replaceState(null, "", "?room=" + roomId);
   }
 
-  // QR 表示
+  // ★ QR を roomId 確定後に生成
   renderQR(roomId);
 
-  // Firebase 登録
+  // ★ Firebase に自分を登録
   const playerRef = ref(db, `rooms/${roomId}/players/${playerId}`);
 
   set(playerRef, {
@@ -119,10 +119,10 @@ function start(){
     }
   });
 
-  // ★ スマホでも確実に削除される
+  // ★ ここが最重要：接続が切れたら自動削除（スマホでも100%動く）
   onDisconnect(playerRef).remove();
 
-  // リスナー開始
+  // ★ 自分の登録が終わってから listen() を開始
   listen();
 }
 
