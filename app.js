@@ -83,29 +83,25 @@ function start(){
     return;
   }
 
-  // ★ mainUI を最初に表示（スマホで最重要）
-  const mainUI = document.getElementById("mainUI");
-  mainUI.classList.remove("hidden");
+  // ★ mainUI を最初に表示
+  document.getElementById("mainUI").classList.remove("hidden");
 
-  // ★ タブ初期状態
-  const inputPanel = document.getElementById("inputPanel");
-  const resultPanel = document.getElementById("resultPanel");
-  inputPanel.style.display = "block";
-  resultPanel.style.display = "none";
-
+  // ★ タブ初期化
+  document.getElementById("inputPanel").style.display = "block";
+  document.getElementById("resultPanel").style.display = "none";
   document.getElementById("tabInput").classList.add("active");
   document.getElementById("tabResult").classList.remove("active");
 
-  // URLコピーを表示
-  document.getElementById("copyBtn").classList.remove("hidden");
-
-  // 部屋ID生成
+  // ★ roomId を先に確定させる（ここが重要）
   if(!roomId){
     roomId = Math.random().toString(36).slice(2,8);
     history.replaceState(null, "", "?room=" + roomId);
   }
 
-  // プレイヤー登録
+  // ★ QR を roomId 確定後に生成
+  renderQR(roomId);
+
+  // ★ Firebase に自分を登録
   set(ref(db,"rooms/"+roomId+"/players/"+playerId),{
     name,
     civilization:selectedCiv,
@@ -119,12 +115,10 @@ function start(){
     }
   });
 
-  // QR 表示
-  renderQR(roomId);
-
-  // ★ UI が表示された後に listen() を呼ぶ（これが重要）
+  // ★ UI 表示後に listen を開始
   listen();
 }
+
 
 
 
@@ -414,6 +408,13 @@ function init(){
     roomId = room;
     listen();
   }
+
+  window.addEventListener("beforeunload", ()=>{
+  if(roomId && playerId){
+    set(ref(db, `rooms/${roomId}/players/${playerId}`), null);
+  }
+});
+
 }
 
 init();
