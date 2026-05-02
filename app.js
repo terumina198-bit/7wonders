@@ -85,25 +85,28 @@ function start(){
     return;
   }
 
-  // ★ mainUI を最初に表示（スマホで最重要）
-  document.getElementById("mainUI").classList.remove("hidden");
-
-  // ★ タブ初期化
-  document.getElementById("inputPanel").style.display = "block";
-  document.getElementById("resultPanel").style.display = "none";
-  document.getElementById("tabInput").classList.add("active");
-  document.getElementById("tabResult").classList.remove("active");
-
-  // ★ roomId を先に確定（QR より前）
+  // ★ roomId を最初に確定
   if(!roomId){
     roomId = Math.random().toString(36).slice(2,8);
     history.replaceState(null, "", "?room=" + roomId);
   }
 
-  // ★ QR を roomId 確定後に生成
+  // ★ QR / コピー ボタンを表示
+  showGameUI()
+
+  // ★ roomId 確定後に QR 生成
   renderQR(roomId);
 
-  // ★ Firebase に自分を登録
+  // UI 表示
+  document.getElementById("mainUI").classList.remove("hidden");
+
+  // タブ初期化
+  document.getElementById("inputPanel").style.display = "block";
+  document.getElementById("resultPanel").style.display = "none";
+  document.getElementById("tabInput").classList.add("active");
+  document.getElementById("tabResult").classList.remove("active");
+
+  // Firebase 登録
   const playerRef = ref(db, `rooms/${roomId}/players/${playerId}`);
 
   set(playerRef, {
@@ -118,13 +121,13 @@ function start(){
       science_gear:0,science_compass:0,science_tablet:0,science_all:0
     }
   });
-
-  // ★ ここが最重要：接続が切れたら自動削除（スマホでも100%動く）
+  // ★ ここが最重要：スマホでも確実に削除される
   onDisconnect(playerRef).remove();
-
-  // ★ 自分の登録が終わってから listen() を開始
+  
+  // リスナー開始
   listen();
 }
+
 
 function showGameUI(){
   document.getElementById("civSelect").classList.remove("hidden");
