@@ -45,14 +45,17 @@ function calc(s){
   return (
     (s.military_land||0)+
     (s.military_sea||0)+
+
     Math.floor((s.economy_coin||0) / 3) +
     (s.economy_debt||0)+
     (s.economy_trade||0)+
+
     (s.build_wonder||0)+
     (s.build_point||0)+
-    (s.expansion_guild||0)+
+    (s.build_guild||0)+
+    (s.build_city||0)+
+
     (s.expansion_leader||0)+
-    (s.expansion_city||0)+
     (s.expansion_naval||0) +
     (s.expansion_palm||0) +
     calcScience(s)
@@ -115,9 +118,8 @@ function start(){
     scores:{
       military_land:0,military_sea:0,
       economy_coin:0,economy_debt:0,economy_trade:0,
-      build_wonder:0,build_point:0,
-      expansion_guild:0,expansion_leader:0,expansion_city:0,
-      expansion_naval:0,expansion_palm:0,
+      build_wonder:0,build_point:0,build_guild:0,build_city:0,
+      expansion_leader:0,expansion_naval:0,expansion_palm:0,
       science_gear:0,science_compass:0,science_tablet:0,science_all:0
     }
   });
