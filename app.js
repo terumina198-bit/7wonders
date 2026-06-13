@@ -63,6 +63,7 @@ function calc(s){
 }
 
 /* ================= UI ================= */
+/*
 function row(label,key,val){
   return `
   <div class="row">
@@ -72,6 +73,33 @@ function row(label,key,val){
     <button onclick="change('${key}',1)">+</button>
   </div>`;
 }
+  */
+function row(label, key, val){
+  return `
+  <div class="row">
+    <div class="label">${label}</div>
+
+    <button class="minusBtn" onclick="change('${key}', -1)">-</button>
+
+    <input type="number"
+           class="numInput"
+           value="${val || 0}"
+           oninput="updateValue('${key}', this.value)">
+
+    <button class="plusBtn" onclick="change('${key}', 1)">+</button>
+  </div>`;
+}
+
+window.updateValue = function(key, value){
+  const num = Number(value) || 0;
+
+  runTransaction(
+    ref(db, `rooms/${roomId}/players/${playerId}/scores/${key}`),
+    () => num
+  );
+
+  updateTopBar();
+};
 
 /* ================= start ================= */
 
