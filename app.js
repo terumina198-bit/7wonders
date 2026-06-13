@@ -194,7 +194,7 @@ function listen(){
     // ★ トップバー更新
     updateTopBar();
 
-    renderInput(arr.find(p=>p.id===playerId)?.scores||{});
+    // renderInput(arr.find(p=>p.id===playerId)?.scores||{});
 
     document.getElementById("resultPanel").innerHTML=
       renderTable(arr);
