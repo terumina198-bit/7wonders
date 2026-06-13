@@ -15,7 +15,7 @@ body{
 
 .layout{
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 330px 1fr;
   gap: 10px;
   align-items: start;
 }
@@ -34,6 +34,13 @@ body{
   border-radius:10px;
 }
 
+.numInput {
+  width: 80px;
+  font-size: 18px;
+  padding: 6px;
+  text-align: center;
+}
+
 .section{
   background:#f0f0f0;
   margin-bottom:10px;
@@ -45,8 +52,12 @@ body{
 
 .row{
   display: grid;
-  grid-template-columns:90px 35px 40px 35px;
+  grid-template-columns:150px 35px 40px 35px;
   align-items: center;
+}
+
+.label {
+  width: 100%;   /* ラベルの幅 */
 }
 
 .hidden{
