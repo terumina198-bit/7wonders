@@ -79,6 +79,18 @@ function row(label, key, val){
   <div class="row">
     <div class="label">${label}</div>
 
+    <input type="number"
+           class="numInput"
+           value="${val || 0}"
+           oninput="updateValue('${key}', this.value)">
+
+  </div>`;
+}
+/*function row(label, key, val){
+  return `
+  <div class="row">
+    <div class="label">${label}</div>
+
     <button class="minusBtn" onclick="change('${key}', -1)">-</button>
 
     <input type="number"
@@ -88,7 +100,7 @@ function row(label, key, val){
 
     <button class="plusBtn" onclick="change('${key}', 1)">+</button>
   </div>`;
-}
+}*/
 
 window.updateValue = function(key, value){
   const num = Number(value) || 0;
